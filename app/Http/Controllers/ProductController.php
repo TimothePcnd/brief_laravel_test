@@ -19,9 +19,10 @@ class ProductController extends Controller
     public function store(Request $request) {
         // Validation simplifiée pour permettre aux apprenants de créer des tests
         $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
+            'name' => 'required|string|max:25',
+            'description' => 'required|string|max:255',
+            'price' => 'required|numeric|decimal:0,2|min:0',
+            'stock' => 'required|integer|decimal:0|min:0',
         ]);
 
         Product::create($request->all());
@@ -38,9 +39,10 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product) {
         $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
+            'name' => 'required|string|max:25',
+            'description' => 'required|string|max:255',
+            'price' => 'required|numeric|decimal:0,2|min:0',
+            'stock' => 'required|integer|decimal:0|min:0',
         ]);
 
         $product->update($request->all());
