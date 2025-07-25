@@ -29,6 +29,9 @@ jobs:
           php-version: ${{ env.php_version }}
           coverage: pcov
 
+      - name: Generate app key
+        run: php artisan key:generate
+
       - name: Composer install
         run: |
           composer validate --strict
