@@ -1,0 +1,40 @@
+name: test-laravel
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  <ma variable d'env>: <.env>
+  php_version: 8.2
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: test-laravel-${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+
+      - name: Récupération du projet
+        uses: actions/checkout@v3
+
+      - name: Initialize PHP ${{ env.php_version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.php_version }}
+          coverage: pcov
+
+      - name: Composer install
+        run: |
+          composer validate --strict
+          composer install --optimize-autoloader --no-interaction --prefer-dist
+
+      - name: Test
+        run: php artisan test
+
+
+
