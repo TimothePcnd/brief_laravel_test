@@ -17,9 +17,11 @@ jobs:
       cancel-in-progress: true
 
     steps:
-
       - name: Récupération du projet
         uses: actions/checkout@v3
+
+      - name: Create bootstrap/cache directory
+        run: mkdir -p bootstrap/cache && chmod -R 775 bootstrap/cache
 
       - name: Initialize PHP ${{ env.php_version }}
         uses: shivammathur/setup-php@v2
