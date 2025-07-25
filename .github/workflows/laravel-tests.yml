@@ -34,9 +34,12 @@ jobs:
           composer validate --strict
           composer install --optimize-autoloader --no-interaction --prefer-dist
 
-      - name: Generate app key
+      - name: .env file
         run:
           cp .env.example .env
+
+      - name: Generate app key
+        run:
           php artisan key:generate
 
       - name: Run tests
